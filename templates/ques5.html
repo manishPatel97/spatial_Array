@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var flash = ["/static/test5/main.png", "/static/blank.png"];
+            var start;
+            var end;
+            //var images = ["/static/1.png","/static/2.png","/static/3.png","/stati`c/4.png","/static/5.png"];
+            var cp = 0;
+            function v () {
+                if(cp < flash.length)
+                {
+                    $("#image").attr('src', flash[cp]);
+                }
+                else return;
+                cp++;
+            }
+            setInterval(v, 2000);
+            setTimeout(function() { $("#hns").css('display', 'block'); start = Date.now(); }, 3000);
+            //b2.onclick();
+            //b3.onclick();
+            $("#b4").click(function(){
+                end = Date.now();
+                alert("Correct!!!!!");
+                $.ajax({
+                    data: { time : (end-start)/1000, option: "correct" },
+                    type: 'post',
+                    dataType: 'json',
+                    url:'/pos',
+                    success: function(response) {
+                        var time = JSON.parse(response);
+                        console.log(time+'\n');
+                    }
+                });
+            });
+            $("#b1").click(x2);
+            $("#b2").click(x2);
+            $("#b3").click(x2);
+            function x2(){
+                end = Date.now();
+                alert("It's the wrong answer!!!!");
+                $.ajax({
+                    data: { time : (end-start)/1000, option: "wrong" },
+                    type: 'post',
+                    dataType: 'json',
+                    url:'/pos',
+                    success: function(response) {
+                        var time = JSON.parse(response);
+                        console.log(time+'\n');
+                    }
+                });
+            };
+
+        });
+    </script>
+    <!--<link rel="stylesheet" type="text/css" href="form1.css">-->
+    <style>
+        div#hns
+        {
+            display: none;
+        }
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            top: 0;
+            right: 0;
+        }
+    </style>
+    <title>Title</title>
+</head>
+<body>
+<h2>Testcase 5 </h2>
+<h2>Choose one option from below</h2>
+<img id="image" src="/static/test5/main.jpg">
+<p><p>
+<p>
+    <div id="hns">
+        <p>
+            <img src="/static/test5/1.jpg">
+            <button id="b1" type="button" onclick="x2()">Pass 1</button>
+            <img src="/static/test5/2.jpg">
+            <button id="b2" type="button" onclick="x2()">Pass 2</button>
+        </p>
+        <img src="/static/test5/3.jpg">
+        <button id="b3" type="button" onclick="x2()">Pass 3</button>
+        <img src="/static/test5/4.jpg">
+        <button id="b4" type="button" onclick="x1()">Pass 4</button>
+        <!--<img src="/static/4.png">
+        <button id="b5" type="button">Pass 5</button>-->
+    </div>
+</p>
+<button class="button" onclick="window.location.href ='http://127.0.0.1:5000/ques6.html' ">NEXT</button>
+</body>
+</html>
